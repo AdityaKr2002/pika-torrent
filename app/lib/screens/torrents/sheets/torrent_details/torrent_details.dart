@@ -9,23 +9,41 @@ import 'package:provider/provider.dart';
 
 class TorrentDetailsModalSheet extends StatelessWidget {
   final int id;
+  final int initialTab;
+  final bool showOnlyPlayableFiles;
 
-  const TorrentDetailsModalSheet({super.key, required this.id});
+  const TorrentDetailsModalSheet({
+    super.key,
+    required this.id,
+    this.initialTab = 0,
+    this.showOnlyPlayableFiles = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Consumer<TorrentsModel>(builder: (context, torrentsModel, child) {
       var torrent =
           torrentsModel.torrents.firstWhere((element) => element.id == id);
-      return TorrentDetailsModalSheetContent(torrent: torrent);
+      return TorrentDetailsModalSheetContent(
+        torrent: torrent,
+        initialTab: initialTab,
+        showOnlyPlayableFiles: showOnlyPlayableFiles,
+      );
     });
   }
 }
 
 class TorrentDetailsModalSheetContent extends StatelessWidget {
   final Torrent torrent;
+  final int initialTab;
+  final bool showOnlyPlayableFiles;
 
-  const TorrentDetailsModalSheetContent({super.key, required this.torrent});
+  const TorrentDetailsModalSheetContent({
+    super.key,
+    required this.torrent,
+    this.initialTab = 0,
+    this.showOnlyPlayableFiles = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +51,7 @@ class TorrentDetailsModalSheetContent extends StatelessWidget {
 
     return DefaultTabController(
       length: 3, // Number of tabs
+      initialIndex: initialTab,
       child: Expanded(
         child: Material(
           child: Column(children: [
@@ -50,6 +69,7 @@ class TorrentDetailsModalSheetContent extends StatelessWidget {
                   FilesTab(
                     torrent: torrent,
                     location: torrent.location,
+                    showOnlyPlayable: showOnlyPlayableFiles,
                   ),
                   TagsTab(torrent: torrent),
                   DetailsTab(torrent: torrent)

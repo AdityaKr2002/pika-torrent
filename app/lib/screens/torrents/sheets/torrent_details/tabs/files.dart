@@ -14,15 +14,27 @@ import 'package:mime/mime.dart';
 class FilesTab extends StatefulWidget {
   final Torrent torrent;
   final String location;
+  final bool showOnlyPlayable;
 
-  const FilesTab({super.key, required this.torrent, required this.location});
+  const FilesTab({
+    super.key,
+    required this.torrent,
+    required this.location,
+    this.showOnlyPlayable = false,
+  });
 
   @override
   State<FilesTab> createState() => _FilesTabState();
 }
 
 class _FilesTabState extends State<FilesTab> {
-  bool _showOnlyPlayable = false;
+  late bool _showOnlyPlayable;
+
+  @override
+  void initState() {
+    super.initState();
+    _showOnlyPlayable = widget.showOnlyPlayable;
+  }
 
   bool _isFilePlayable(String filename) {
     var mimeType = lookupMimeType(filename);

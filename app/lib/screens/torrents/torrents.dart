@@ -7,6 +7,7 @@ import 'package:pikatorrent/engine/torrent.dart';
 import 'package:pikatorrent/l10n/app_localizations.dart';
 import 'package:pikatorrent/models/torrents.dart';
 import 'package:pikatorrent/screens/torrents/filter_labels_button.dart';
+import 'package:pikatorrent/screens/torrents/sheets/torrent_details/torrent_details.dart';
 import 'package:pikatorrent/screens/torrents/sort_button.dart';
 import 'package:pikatorrent/screens/torrents/text_search.dart';
 import 'package:pikatorrent/screens/torrents/torrent_list_tile/torrent_list_tile.dart';
@@ -168,8 +169,20 @@ class _TorrentScreen extends State<TorrentsScreen>
                       key: Key(index.toString()),
                       endActionPane: ActionPane(
                         motion: const ScrollMotion(),
-                        extentRatio: 0.6,
+                        extentRatio: 0.8,
                         children: [
+                          SlidableAction(
+                            backgroundColor: Colors.green,
+                            onPressed: (_) => showDeviceSheet(
+                                context,
+                                torrent.name,
+                                TorrentDetailsModalSheet(
+                                  id: torrent.id,
+                                  initialTab: 0,
+                                  showOnlyPlayableFiles: true,
+                                )),
+                            icon: Icons.play_circle_outlined,
+                          ),
                           SlidableAction(
                             backgroundColor: Colors.blue,
                             onPressed: (_) =>

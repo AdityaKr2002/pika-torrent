@@ -94,6 +94,19 @@ class TorrentListTile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
+                      tooltip: localizations.play,
+                      onPressed: () => showDeviceSheet(
+                          context,
+                          torrent.name,
+                          TorrentDetailsModalSheet(
+                            id: torrent.id,
+                            initialTab: 0,
+                            showOnlyPlayableFiles: true,
+                          )),
+                      icon: const Icon(
+                        Icons.play_circle_outlined,
+                      )),
+                  IconButton(
                       tooltip: localizations.share,
                       onPressed: () => shareLink(context, torrent.magnetLink),
                       icon: const Icon(
