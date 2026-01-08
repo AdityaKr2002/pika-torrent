@@ -35,6 +35,14 @@ class _TorrentScreen extends State<TorrentsScreen>
   final Set<int> _selectedTorrentIds = {};
   bool _isSelectionMode = false;
 
+  Widget _buildActionDivider() {
+    return VerticalDivider(
+      width: 1,
+      thickness: 1,
+      color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+    );
+  }
+
   void _toggleSelection(int torrentId) {
     setState(() {
       if (_selectedTorrentIds.contains(torrentId)) {
@@ -171,8 +179,10 @@ class _TorrentScreen extends State<TorrentsScreen>
                         motion: const ScrollMotion(),
                         extentRatio: 0.8,
                         children: [
+                          _buildActionDivider(),
                           SlidableAction(
-                            backgroundColor: Colors.green,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
                             onPressed: (_) => showDeviceSheet(
                                 context,
                                 torrent.name,
@@ -183,21 +193,27 @@ class _TorrentScreen extends State<TorrentsScreen>
                                 )),
                             icon: Icons.play_circle_outlined,
                           ),
+                          _buildActionDivider(),
                           SlidableAction(
-                            backgroundColor: Colors.blue,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
                             onPressed: (_) =>
                                 shareLink(context, torrent.magnetLink),
                             icon: Icons.share,
                           ),
-                          if (isDesktop())
+                          if (isDesktop()) ...[
+                            _buildActionDivider(),
                             SlidableAction(
                               backgroundColor:
                                   Theme.of(context).colorScheme.surface,
                               onPressed: (_) => torrent.openFolder(context),
                               icon: Icons.folder_outlined,
                             ),
+                          ],
+                          _buildActionDivider(),
                           SlidableAction(
-                            backgroundColor: Colors.red,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
                             onPressed: (_) => showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
